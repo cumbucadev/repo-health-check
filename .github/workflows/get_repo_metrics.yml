@@ -1,0 +1,46 @@
+name: Get Repo Metrics
+on: [push]
+jobs:
+    get-metric-job:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Print Repo Data Metrics
+              run: | 
+                echo "### Count: Stargazer, Watchers e Fork ###"
+                gh repo view DesignLiquido/delegua --json stargazerCount,watchers,forkCount
+
+                echo "### Last release ###"
+                gh release view --repo DesignLiquido/delegua
+
+                echo "### Stargazers List ###"
+                gh api repos/DesignLiquido/delegua/stargazers
+
+                echo "### Contributors Count ###"
+                gh api repos/DesignLiquido/delegua/contributors --paginate | jq length
+
+                echo "### Contributors List ###"
+                gh api repos/DesignLiquido/delegua/contributors --paginate 
+
+                echo "### Issues Count - OPEN ###"
+                gh issue list --repo DesignLiquido/delegua --state open --limit 1000 | wc -l
+
+                echo "### Issues Count - CLOSED ###"
+                gh issue list --repo DesignLiquido/delegua --state closed --limit 1000 | wc -l
+
+                echo "### PR Count - OPEN ###"
+                gh pr list --repo DesignLiquido/delegua --state open --limit 1000 | wc -l
+
+                echo "### PR Count - CLOSED ###"
+                gh pr list --repo DesignLiquido/delegua --state closed --limit 1000 | wc -l
+
+                echo "### Community Standarts ###"
+                gh api repos/DesignLiquido/delegua/community/profile
+                gh repo view DesignLiquido/delegua --json isSecurityPolicyEnabled
+
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
