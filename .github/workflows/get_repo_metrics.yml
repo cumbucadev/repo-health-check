@@ -1,4 +1,4 @@
-name: Get Repo Metrics
+name: Get Metrics JSON File
 on: [push]
 jobs:
     get-metric-job:
@@ -8,38 +8,36 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Print Repo Data Metrics
+            - name: Create JSON File with Repo Data Metric
               run: | 
-                echo "### Count: Stargazer, Watchers e Fork ###"
-                gh repo view DesignLiquido/delegua --json stargazerCount,watchers,forkCount
+                echo "### Count: Stargazer, Watchers & Fork ###"
+                gh repo view DesignLiquido/delegua --json stargazerCount,watchers,forkCount > metrics.json
 
                 echo "### Last release ###"
-                gh release view --repo DesignLiquido/delegua
-
-                echo "### Stargazers List ###"
-                gh api repos/DesignLiquido/delegua/stargazers
+                gh release view --repo DesignLiquido/delegua --json name,tagName,publishedAt,url >> metrics.json
 
                 echo "### Contributors Count ###"
-                gh api repos/DesignLiquido/delegua/contributors --paginate | jq length
-
-                echo "### Contributors List ###"
-                gh api repos/DesignLiquido/delegua/contributors --paginate 
+                gh api repos/DesignLiquido/delegua/contributors --paginate | jq length >> metrics.json
 
                 echo "### Issues Count - OPEN ###"
-                gh issue list --repo DesignLiquido/delegua --state open --limit 1000 | wc -l
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:open' --jq '.total_count' >> metrics.json
 
                 echo "### Issues Count - CLOSED ###"
-                gh issue list --repo DesignLiquido/delegua --state closed --limit 1000 | wc -l
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:closed' --jq '.total_count' >> metrics.json
 
                 echo "### PR Count - OPEN ###"
-                gh pr list --repo DesignLiquido/delegua --state open --limit 1000 | wc -l
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:open' --jq '.total_count' >> metrics.json
 
                 echo "### PR Count - CLOSED ###"
-                gh pr list --repo DesignLiquido/delegua --state closed --limit 1000 | wc -l
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:closed' --jq '.total_count' >> metrics.json
 
                 echo "### Community Standards ###"
-                gh api repos/DesignLiquido/delegua/community/profile
-                gh repo view DesignLiquido/delegua --json isSecurityPolicyEnabled
+                gh api repos/DesignLiquido/delegua/community/profile >> metrics.json
+                gh repo view DesignLiquido/delegua --json isSecurityPolicyEnabled >> metrics.json
+
+                echo "### JSON ###"
+                cat metrics.json
 
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
