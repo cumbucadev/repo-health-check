@@ -39,11 +39,11 @@ jobs:
                 jq -n \
                   --argjson stats "$STATS" \
                   --argjson last_release "$LAST_RELEASE" \
-                  --arg contributors_count "$CONTRIBUTORS_COUNT" \
-                  --arg issues_open "$ISSUES_OPEN" \
-                  --arg issues_closed "$ISSUES_CLOSED" \
-                  --arg pr_open "$PR_OPEN" \
-                  --arg pr_closed "$PR_CLOSED" \
+                  --argjson contributors_count "$CONTRIBUTORS_COUNT" \
+                  --arargjsong issues_open "$ISSUES_OPEN" \
+                  --argjson issues_closed "$ISSUES_CLOSED" \
+                  --argjson pr_open "$PR_OPEN" \
+                  --argjson pr_closed "$PR_CLOSED" \
                   --argjson community "$COMMUNITY" \
                   --argjson security "$SECURITY" \
                   '{
