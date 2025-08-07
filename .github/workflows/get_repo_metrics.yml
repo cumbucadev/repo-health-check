@@ -10,54 +10,47 @@ jobs:
 
             - name: Generate JSON File with Repo Data Metric
               run: | 
-                echo "### Count: Stargazer, Watchers & Fork ###"
-                STATS=$(gh repo view DesignLiquido/delegua --json stargazerCount,watchers,forkCount)
+                echo "### Count: Stargazer###"
+                gh repo view DesignLiquido/delegua --json stargazerCount > stargazerCount.json
+                cat stargazerCount.json
+
+                echo "### Count: Watchers ###"
+                gh repo view DesignLiquido/delegua --json watchers > watchersCount.json
+                cat watchersCount.json
+
+                echo "### Count: Fork ###"
+                gh repo view DesignLiquido/delegua --json forkCount > forkCount.json
+                cat forkCount.json
 
                 echo "### Last release ###"
-                LAST_RELEASE=$(gh release view --repo DesignLiquido/delegua --json name,tagName,publishedAt,url)
+                gh release view --repo DesignLiquido/delegua --json name,tagName,publishedAt,url > lastReleaseData.json
+                cat lastReleaseData.json
 
                 echo "### Contributors Count ###"
-                CONTRIBUTORS_COUNT=$(gh api repos/DesignLiquido/delegua/contributors --paginate | jq length)
+                gh api repos/DesignLiquido/delegua/contributors --paginate | jq length > contriburosCount.json
+                cat contriburosCount.json
 
                 echo "### Issues Count - OPEN ###"
-                ISSUES_OPEN=$(gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:open' --jq '.total_count')
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:open' --jq '.total_count' > openIssuesCount.json
+                cat openIssuesCount.json
 
                 echo "### Issues Count - CLOSED ###"
-                ISSUES_CLOSED=$(gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:closed' --jq '.total_count')
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:closed' --jq '.total_count' > closedIssuesCount.json
+                cat closedIssuesCount.json
 
                 echo "### PR Count - OPEN ###"
-                PR_OPEN=$(gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:open' --jq '.total_count')
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:open' --jq '.total_count' > openPRsCount.json
+                cat openPRsCount.json
 
                 echo "### PR Count - CLOSED ###"
-                PR_CLOSED=$(gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:closed' --jq '.total_count')
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:closed' --jq '.total_count' > closedPRsCount.json
+                cat closedPRsCount.json
 
                 echo "### Community Standards ###"
-                COMMUNITY=$(gh api repos/DesignLiquido/delegua/community/profile)
-                SECURITY=$(gh repo view DesignLiquido/delegua --json isSecurityPolicyEnabled)
-
-                echo "### JSON ###"
-                jq -n \
-                  --argjson stats "$STATS" \
-                  --argjson last_release "$LAST_RELEASE" \
-                  --arg contributors_count "$CONTRIBUTORS_COUNT" \
-                  --arg issues_open "$ISSUES_OPEN" \
-                  --arg issues_closed "$ISSUES_CLOSED" \
-                  --arg pr_open "$PR_OPEN" \
-                  --arg pr_closed "$PR_CLOSED" \
-                  --argjson community "$COMMUNITY" \
-                  --argjson security "$SECURITY" \
-                  '{
-                    stargazerCount: $stats.stargazerCount,
-                    watchers: $stats.watchers,
-                    forkCount: $stats.forkCount,
-                    lastRelease: $last_release,
-                    contributorsCount: ($contributors_count|tonumber),
-                    issues: { open: ($issues_open|tonumber), closed: ($issues_closed|tonumber) },
-                    pullRequests: { open: ($pr_open|tonumber), closed: ($pr_closed|tonumber) },
-                    communityStandards: ($community + { security: $security.isSecurityPolicyEnabled })
-                  }' > metrics.json
-
-                cat metrics.json
+                gh api repos/DesignLiquido/delegua/community/profile) > communityStandards.json
+                cat communityStandards.json
+                SECURITY=$(gh repo view DesignLiquido/delegua --json isSecurityPolicyEnabled) > security.json
+                cat security.json
 
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
