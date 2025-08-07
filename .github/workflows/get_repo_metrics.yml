@@ -47,7 +47,7 @@ jobs:
                 cat closedPRsCount.json
 
                 echo "### Community Standards ###"
-                gh api repos/DesignLiquido/delegua/community/profile) > communityStandards.json
+                gh api repos/DesignLiquido/delegua/community/profile > communityStandards.json
                 cat communityStandards.json
                 gh repo view DesignLiquido/delegua --json isSecurityPolicyEnabled > security.json
                 cat security.json
