@@ -49,7 +49,7 @@ jobs:
                 echo "### Community Standards ###"
                 gh api repos/DesignLiquido/delegua/community/profile) > communityStandards.json
                 cat communityStandards.json
-                SECURITY=$(gh repo view DesignLiquido/delegua --json isSecurityPolicyEnabled) > security.json
+                gh repo view DesignLiquido/delegua --json isSecurityPolicyEnabled > security.json
                 cat security.json
 
               env:
