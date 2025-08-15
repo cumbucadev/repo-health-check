@@ -23,7 +23,7 @@ jobs:
                 gh release view --repo DesignLiquido/delegua --json name,tagName,publishedAt,url > lastReleaseData.json
 
                 echo "### Contributors Count ###"
-                gh api repos/DesignLiquido/delegua/contributors --paginate | jq length > contriburosCount.json
+                gh api repos/DesignLiquido/delegua/contributors --paginate | jq length > contributorsCount.json
 
                 echo "### Issues Count - OPEN ###"
                 gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:open' --jq '.total_count' > openIssuesCount.json
@@ -68,11 +68,11 @@ jobs:
                 name: lastReleaseData
                 path: lastReleaseData.json
 
-            - name: Upload contriburosCount.json
+            - name: Upload contributorsCount.json
               uses: actions/upload-artifact@v4
               with:
-                name: contriburosCount
-                path: contriburosCount.json
+                name: contributorsCount
+                path: contributorsCount.json
 
             - name: Upload openIssuesCount.json
               uses: actions/upload-artifact@v4
