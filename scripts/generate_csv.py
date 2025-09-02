@@ -1,4 +1,4 @@
-import json
+import json, csv
 
 # --- OPEN JSON FILES --- #
 # Star count
@@ -80,5 +80,10 @@ repo_data_dict = {
     'community_stardards_pr_template': True if community_standards_data.get('files', {}).get('pull_request_template') is not None else False,
     'community_stardards_content_reports_enabled': community_standards_data.get('content_reports_enabled')
 }
+
+with open("repo_health_data.csv", "w", newline="", encoding="utf-8") as repo_health_data:
+    writer = csv.DictWriter(repo_health_data, fieldnames=repo_data_dict.keys())
+    writer.writeheader()
+    writer.writerow(repo_data_dict)
 
 print(repo_data_dict)
