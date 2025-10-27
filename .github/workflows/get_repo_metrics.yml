@@ -45,67 +45,67 @@ jobs:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
             - name: Upload stargazerCount.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: stargazerCount
                 path: stargazerCount.json
           
             - name: Upload watchersCount.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: watchersCount
                 path: watchersCount.json
             
             - name: Upload forkCount.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: forkCount
                 path: forkCount.json
           
             - name: Upload lastReleaseData.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: lastReleaseData
                 path: lastReleaseData.json
 
             - name: Upload contriburosCount.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: contriburosCount
                 path: contriburosCount.json
 
             - name: Upload openIssuesCount.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: openIssuesCount
                 path: openIssuesCount.json
 
             - name: Upload closedIssuesCount.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: closedIssuesCount
                 path: closedIssuesCount.json
 
             - name: Upload openPRsCount.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: openPRsCount
                 path: openPRsCount.json
 
             - name: Upload closedPRsCount.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: closedPRsCount
                 path: closedPRsCount.json
     
             - name: Upload communityStandards.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: communityStandards
                 path: communityStandards.json
 
             - name: Upload security.json
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: security
                 path: security.json
