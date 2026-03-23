@@ -70,7 +70,7 @@ repo_data_dict = {
     'closed_issues_count': closed_issues_count_data,
     'open_prs_count': open_prs_count_data,
     'closed_prs_count': closed_prs_count_data,
-    'community_stardards_description': True if community_standards_data.get('description') else False,
+    'community_standards_description': bool(community_standards_data.get('description')),
     'community_stardards_readme': True if community_standards_data.get('files', {}).get('readme') is not None else False ,
     'community_stardards_code_of_conduct': True if community_standards_data.get('files', {}).get('code_of_conduct') is not None else False,
     'community_stardards_contributing': True if community_standards_data.get('files', {}).get('contributing', {}).get('url') is not None else False,
