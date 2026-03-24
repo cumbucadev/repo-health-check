@@ -10,6 +10,9 @@ jobs:
 
             - name: Generate JSON File with Repo Data Metric
               run: | 
+
+                mkdir -p ./files
+                
                 echo "### Count: Stargazer###"
                 gh repo view DesignLiquido/delegua --json stargazerCount > ./files/stargazerCount.json
 
