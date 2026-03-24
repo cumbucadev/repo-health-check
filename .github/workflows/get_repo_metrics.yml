@@ -11,31 +11,31 @@ jobs:
             - name: Generate JSON File with Repo Data Metric
               run: | 
                 echo "### Count: Stargazer###"
-                gh repo view DesignLiquido/delegua --json stargazerCount > stargazerCount.json
+                gh repo view DesignLiquido/delegua --json stargazerCount > ./files/stargazerCount.json
 
                 echo "### Count: Watchers ###"
-                gh repo view DesignLiquido/delegua --json watchers > watchersCount.json
+                gh repo view DesignLiquido/delegua --json watchers > ./files/watchersCount.json
 
                 echo "### Count: Fork ###"
-                gh repo view DesignLiquido/delegua --json forkCount > forkCount.json
+                gh repo view DesignLiquido/delegua --json forkCount > ./files/forkCount.json
 
                 echo "### Last release ###"
-                gh release view --repo DesignLiquido/delegua --json name,tagName,publishedAt,url > lastReleaseData.json
+                gh release view --repo DesignLiquido/delegua --json name,tagName,publishedAt,url > ./files/lastReleaseData.json
 
                 echo "### Contributors Count ###"
-                gh api repos/DesignLiquido/delegua/contributors --paginate | jq length > contributorsCount.json
+                gh api repos/DesignLiquido/delegua/contributors --paginate | jq length > ./files/contributorsCount.json
 
                 echo "### Issues Count - OPEN ###"
-                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:open' --jq '.total_count' > openIssuesCount.json
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:open' --jq '.total_count' > ./files/openIssuesCount.json
 
                 echo "### Issues Count - CLOSED ###"
-                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:closed' --jq '.total_count' > closedIssuesCount.json
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:issue+is:closed' --jq '.total_count' > ./files/closedIssuesCount.json
 
                 echo "### PR Count - OPEN ###"
-                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:open' --jq '.total_count' > openPRsCount.json
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:open' --jq '.total_count' > ./files/openPRsCount.json
 
                 echo "### PR Count - CLOSED ###"
-                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:closed' --jq '.total_count' > closedPRsCount.json
+                gh api 'search/issues?q=repo:DesignLiquido/delegua+is:pr+is:closed' --jq '.total_count' > ./files/closedPRsCount.json
 
                 echo "### Community Standards ###"
                 gh api repos/DesignLiquido/delegua/community/profile > communityStandards.json
@@ -45,67 +45,67 @@ jobs:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
             - name: Upload stargazerCount.json
-              uses: actions/upload-artifact@v4
+              uses: ./files/actions/upload-artifact@v4
               with:
                 name: stargazerCount
-                path: stargazerCount.json
+                path: ./files/stargazerCount.json
           
             - name: Upload watchersCount.json
-              uses: actions/upload-artifact@v4
+              uses: ./files/actions/upload-artifact@v4
               with:
                 name: watchersCount
-                path: watchersCount.json
+                path: ./files/watchersCount.json
             
             - name: Upload forkCount.json
-              uses: actions/upload-artifact@v4
+              uses: ./files/actions/upload-artifact@v4
               with:
                 name: forkCount
-                path: forkCount.json
+                path: ./files/forkCount.json
           
             - name: Upload lastReleaseData.json
-              uses: actions/upload-artifact@v4
+              uses: ./files/actions/upload-artifact@v4
               with:
                 name: lastReleaseData
-                path: lastReleaseData.json
+                path: ./files/lastReleaseData.json
 
             - name: Upload contributorsCount.json
               uses: actions/upload-artifact@v4
               with:
                 name: contributorsCount
-                path: contributorsCount.json
+                path: ./files/contributorsCount.json
 
             - name: Upload openIssuesCount.json
               uses: actions/upload-artifact@v4
               with:
                 name: openIssuesCount
-                path: openIssuesCount.json
+                path: ./files/openIssuesCount.json
 
             - name: Upload closedIssuesCount.json
               uses: actions/upload-artifact@v4
               with:
                 name: closedIssuesCount
-                path: closedIssuesCount.json
+                path: ./files/closedIssuesCount.json
 
             - name: Upload openPRsCount.json
               uses: actions/upload-artifact@v4
               with:
                 name: openPRsCount
-                path: openPRsCount.json
+                path: ./files/openPRsCount.json
 
             - name: Upload closedPRsCount.json
               uses: actions/upload-artifact@v4
               with:
                 name: closedPRsCount
-                path: closedPRsCount.json
+                path: ./files/closedPRsCount.json
     
             - name: Upload communityStandards.json
               uses: actions/upload-artifact@v4
               with:
                 name: communityStandards
-                path: communityStandards.json
-
+                path: ./files/communityStandards.json
+            
             - name: Upload security.json
               uses: actions/upload-artifact@v4
               with:
                 name: security
-                path: security.json
+                path: ./files/security.json
